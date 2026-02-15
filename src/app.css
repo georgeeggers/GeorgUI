@@ -1,0 +1,135 @@
+:root {
+  font-family: "JB_Mono";
+  line-height: 1.5;
+  
+--main1: hsl(222, 72%, 55%);
+--main2: hsl(222, 72%, 50.5%);
+--main3: hsl(222, 72%, 46%);
+--main4: hsl(222, 72%, 41.5%);
+--main5: hsl(222, 72%, 37%);
+--main6: hsl(222, 72%, 32.5%);
+
+--bg1: hsl(222, 38%, 3%);
+--bg2: hsl(222, 35%, 11%);
+--bg3: hsl(222, 32%, 19%);
+--bg4: hsl(222, 29%, 27%);
+
+--text1: hsl(222, 25%, 90%);
+--text2: hsl(222, 25%, 90%);
+--text3: hsl(222, 25%, 90%);
+--text4: hsl(222, 25%, 90%);
+
+--fail1: hsl(0, 72%, 55%);
+--fail2: hsl(0, 72%, 50.5%);
+--fail3: hsl(0, 72%, 46%);
+--fail4: hsl(0, 72%, 41.5%);
+--fail5: hsl(0, 72%, 37%);
+--fail6: hsl(0, 72%, 32.5%);
+
+
+
+
+
+
+
+
+
+  --border-radius: 10px;
+  --univMargin: 20px;
+
+  background-color: var(--bg1);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  scrollbar-width: none;
+
+  color: var(--text1);
+}
+
+button, input, p, h1 {
+  color: var(--text1);
+}
+
+* {
+  font-family: "JB_Mono";
+}
+
+@font-face {
+  font-family: "JB_Mono";
+  src: url("/JB_Mono.ttf");
+}
+
+
+.invis {
+  scale: 0;
+  position: fixed;
+}
+
+input, textarea {
+  touch-action: manipulation;
+}
+
+.svgWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  color: var(--text1);
+}
+
+.uiMain {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  place-items: center;
+  padding: var(--univMargin);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: 0px;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollOverflow {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: 0px;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+p {
+  margin: 0px;
+}
+
+.bb1 {
+  background-color: var(--bg1);
+  border: 1px solid var(--bg2);
+  border-radius: var(--border-radius);
+}
+
+.bb2 {
+  background-color: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--border-radius);
+}
+
+.bb3 {
+  background-color: var(--bg3);
+  border: 1px solid var(--bg4);
+  border-radius: var(--border-radius);
+}
