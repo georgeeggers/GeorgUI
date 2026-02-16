@@ -1,5 +1,5 @@
 :root {
-  font-family: "JB_Mono";
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
   
 --main1: hsl(222, 72%, 55%);
@@ -9,10 +9,15 @@
 --main5: hsl(222, 72%, 37%);
 --main6: hsl(222, 72%, 32.5%);
 
---bg1: hsl(222, 38%, 3%);
---bg2: hsl(222, 35%, 11%);
---bg3: hsl(222, 32%, 19%);
---bg4: hsl(222, 29%, 27%);
+--bg1: hsl(222, 18%, 3%);
+--bg2: hsl(222, 15%, 11%);
+--bg3: hsl(222, 12%, 19%);
+--bg4: hsl(222, 9%, 27%);
+
+--bgt1: hsla(222, 38%, 3%, 50%);
+--bgt2: hsla(222, 35%, 11%, 50%);
+--bgt3: hsla(222, 32%, 19%, 50%);
+--bgt4: hsla(222, 29%, 27%, 50%);
 
 --text1: hsl(222, 25%, 90%);
 --text2: hsl(222, 25%, 90%);
@@ -25,14 +30,6 @@
 --fail4: hsl(0, 72%, 41.5%);
 --fail5: hsl(0, 72%, 37%);
 --fail6: hsl(0, 72%, 32.5%);
-
-
-
-
-
-
-
-
 
   --border-radius: 10px;
   --univMargin: 20px;
@@ -49,8 +46,9 @@
   color: var(--text1);
 }
 
-button, input, p, h1 {
+button, input, p, h1, i {
   color: var(--text1);
+  font-style: normal;
 }
 
 * {
@@ -132,4 +130,26 @@ p {
   background-color: var(--bg3);
   border: 1px solid var(--bg4);
   border-radius: var(--border-radius);
+}
+
+.moveButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0px !important; 
+}
+
+.moveButton * {
+  transition: color .25s;
+}
+
+.moveButton:hover * {
+  color: var(--main1);
 }

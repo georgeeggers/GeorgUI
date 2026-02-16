@@ -1,11 +1,13 @@
 <script>
+    import { Code, Copy, PaintBucket } from "@lucide/svelte";
     import BarGraph from "./modules/barGraph.svelte";
     import DropDown from "./modules/dropDown.svelte";
     import PieChart from "./modules/pieChart.svelte";
     import SvgAnimation from "./modules/svgAnimation.svelte";
     import Textarea from "./modules/textarea.svelte";
     import Toggle from "./modules/toggle.svelte";
-
+    import { barGraphCode, dropDownCode, pieChartCode, splashCode, textAreaCode, toggleCode } from "../moduleCode";
+    import { replace } from 'svelte-spa-router';
     let toggle = $state(false);
     let toggle2 = $state(false);
 
@@ -30,7 +32,10 @@
 
     let text = $state("");
 
-
+    const copy = async (text) => {
+        await navigator.clipboard.writeText(text);
+        alert("Code Copied");
+    }
 
 </script>
 
@@ -46,6 +51,11 @@
             <Toggle bind:value={toggle}/>
             <p>Actioned Toggle</p>
             <Toggle bind:value={toggle2} action={() => {alert("This toggle has an action!")}}/>
+            <div class="buttons">
+                <button onclick={() => copy(toggleCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
         </div>
 
         <div class="card bb2" style='grid-area: box-2;'>
@@ -58,6 +68,11 @@
             <DropDown bind:selected={selected2} options={["Option 1", "Option 2", "Option 3"]} stickLeft={true}/>
             <p>Actioned Dropdown</p>
             <DropDown bind:selected={selected3} options={["Option 1", "Option 2", "Option 3"]} stickLeft={false} action={(a) => {alert("You selected " + a)}}/>
+            <div class="buttons">
+                <button onclick={() => copy(dropDownCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
         </div>
 
         <div class="card bb2" style='grid-area: box-3;'>
@@ -66,6 +81,11 @@
             </div>
             <div class="wrapper">
                 <BarGraph bind:points={points}/>
+            </div>
+            <div class="buttons">
+                <button onclick={() => copy(barGraphCode)}>
+                    <Copy size=20 />
+                </button>
             </div>
         </div>
 
@@ -76,6 +96,11 @@
             <div class="wrapper">
                 <SvgAnimation />
             </div>
+            <div class="buttons">
+                <button onclick={() => copy(splashCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
         </div>
 
         <div class="card bb2" style='grid-area: box-5;'>
@@ -84,6 +109,11 @@
             </div>
             <div class="wrapper">
                 <PieChart />
+            </div>
+            <div class="buttons">
+                <button onclick={() => copy(pieChartCode)}>
+                    <Copy size=20 />
+                </button>
             </div>
         </div>
 
@@ -94,6 +124,11 @@
             <div class="wrapper">
                 <Textarea bind:value={text} />
             </div>
+            <div class="buttons">
+                <button onclick={() => copy(textAreaCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
         </div>
 
     </div>
@@ -101,8 +136,35 @@
 
 </div>
 
+<button class="moveButton bb3"
+    onclick={() => replace('/cssOnly')}
+>
+    <div class="svgWrapper">
+        <Code size=30 />
+    </div>
+</button>
 
 <style>
+
+    .buttons {
+        width: 100%;
+        min-height: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        margin-bottom: 10px;
+        margin-top: auto;
+    }
+
+    .buttons button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .buttons button:hover {
+        color: var(--main1);
+    }
 
     .gridBox {
 
@@ -111,7 +173,7 @@
         margin-left: auto;
         margin-right: auto;
         grid-auto-columns: 100px;
-        grid-auto-rows: 100px;
+        grid-auto-rows: 130px;
         grid-template-areas: 
         "box-1 box-1 box-3 box-3 box-3 box-3"
         "box-1 box-1 box-3 box-3 box-3 box-3"

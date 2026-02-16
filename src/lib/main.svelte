@@ -1,5 +1,6 @@
 <script>
-    import { Gamepad, CircleCheck, CirclePlus, Circle, PaintBucket, Binary } from "@lucide/svelte";
+    import { Gamepad, PaintBucket, Binary, Grid, LayoutGrid } from "@lucide/svelte";
+    import { replace } from 'svelte-spa-router'; 
     import { onMount } from "svelte";
     import { getID, getRandomInt } from "../global.svelte";
     import { draw } from "svelte/transition";
@@ -53,6 +54,12 @@
 
         for(let i = 0; i < 4; i++){
             const color = `--bg${i + 1}: ${bg(i)}`;
+            output += color + "\n";
+        }
+        output += "\n";
+
+        for(let i = 0; i < 4; i++){
+            const color = `--bgt${i + 1}: ${bgt(i)}`;
             output += color + "\n";
         }
         output += "\n";
@@ -170,6 +177,90 @@ p {
     border: 1px solid var(--bg4);
     border-radius: var(--border-radius);
 }
+
+.btn1, .btn2, .btn3, .btnM, .btnF {
+    padding: 10px;
+    display: flex;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color .25s;
+}
+.btn1 {
+    background-color: var(--bg1);
+    border: 1px solid var(--bg2);
+}
+.btn1:hover {
+    background-color: var(--bg2);
+}
+.btn2 {
+    background-color: var(--bg2);
+    border: 1px solid var(--bg3);
+}
+.btn2:hover {
+    background-color: var(--bg3);
+}
+.btn3 {
+    background-color: var(--bg3);
+    border: 1px solid var(--bg4);
+}
+.btn3:hover {
+    background-color: var(--bg4);
+}
+.btnM {
+    background-color: var(--main3);
+    border: 1px solid var(--main1);
+}
+.btnM:hover {
+    background-color: var(--main1);
+}
+.btnF {
+    background-color: var(--fail3);
+    border: 1px solid var(--fail1);
+}
+.btnF:hover {
+    background-color: var(--fail1);
+}
+
+.bq {
+    border-left: 4px solid var(--bg4);
+    color: var(--text1);
+    white-space: pre-wrap;
+    padding-left: 15px;
+    font-style: italic;
+}
+
+@keyframes loading {
+    from { rotate: 0deg }
+    to { rotate: 360deg }
+}
+.loading {
+    animation: 1.5s loading infinite;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-5px); }
+    66% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake:hover {
+    animation: .5s shake forwards;
+
+}
+
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    33% { transform: rotate(-5deg); }
+    66% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.wiggle:hover {
+    animation: wiggle .5s;
+}
+
+
 `
         await navigator.clipboard.writeText(output);
         alert("CSS Copied");
@@ -191,7 +282,11 @@ p {
     }
 
     const bg = (i) => {
-        return `hsl(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${backgroundLightness + (backgroundSpread * i)}%);`;
+        return `hsl(${backgroundColor}, ${(0 + (backgroundVibrancy * 2)) - (3 * i)}%, ${backgroundLightness + (backgroundSpread * i)}%);`;
+    }
+
+    const bgt = (i) => {
+        return `hsla(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${backgroundLightness + (backgroundSpread * i)}%, 50%);`;
     }
     
     const fail= (i) => {
@@ -367,7 +462,7 @@ p {
         <div class="item">
             <div class="slider">
                 <p>Vibrancy - {backgroundVibrancy}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={backgroundVibrancy} />
+                <input class='bb3' type='range' min="0" max='30' bind:value={backgroundVibrancy} />
             </div>
         </div>
         <div class="item">
@@ -487,7 +582,7 @@ p {
 
             <div class="gbItem" style='grid-area: box-2; background-color: {bg(1)}; border-radius: {borderRadius}px; border: 1px solid {bg(2)};'>
                 <div class="title">
-                    <p style="color: {text(0)}">Success</p>
+                    <p style="color: {text(0)}">Main</p>
                 </div>
 
                 <div class="barMain" style='color: {text(0)}'>
@@ -504,7 +599,7 @@ p {
 
             <div class="gbItem" style='grid-area: box-3; background-color: {bg(1)}; border-radius: {borderRadius}px; border: 1px solid {bg(2)};'>
                 <div class="title">
-                    <p style="color: {text(0)}">Failures</p>
+                    <p style="color: {text(0)}">Fail</p>
                 </div>
 
                 <div class="barMain" style='color: {text(0)}'>
@@ -534,7 +629,13 @@ p {
 
 </div>
 
-
+<button class="moveButton bb3"
+    onclick={() => replace('/modules')}
+>
+    <div class="svgWrapper">
+        <LayoutGrid size=30 />
+    </div>
+</button>
 
 <style>
 
