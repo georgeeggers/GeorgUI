@@ -4,6 +4,8 @@
     import { getRandomInt, getID } from "../../global.svelte";
     let show = $state(false);
 
+    let { colors } = $props();
+
     onMount(() => {
         show = true;
     })
@@ -60,7 +62,6 @@
 
     }, 1000);
 
-    const colors = ["main1", "main2", "main3", "text1"]
 
 </script>
 

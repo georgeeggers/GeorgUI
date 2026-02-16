@@ -3,11 +3,13 @@
     import BarGraph from "./modules/barGraph.svelte";
     import DropDown from "./modules/dropDown.svelte";
     import PieChart from "./modules/pieChart.svelte";
-    import SvgAnimation from "./modules/svgAnimation.svelte";
+    import SvgAnimation from "./modules/splash.svelte";
     import Textarea from "./modules/textarea.svelte";
     import Toggle from "./modules/toggle.svelte";
-    import { barGraphCode, dropDownCode, pieChartCode, splashCode, textAreaCode, toggleCode } from "../moduleCode";
+    import { barGraphCode, dropDownCode, pieChartCode, splashCode, squiggleCode, textAreaCode, toggleCode, windCode } from "../moduleCode";
     import { replace } from 'svelte-spa-router';
+    import Wind from "./modules/wind.svelte";
+    import Squiggles from "./modules/squiggles.svelte";
     let toggle = $state(false);
     let toggle2 = $state(false);
 
@@ -36,6 +38,7 @@
         await navigator.clipboard.writeText(text);
         alert("Code Copied");
     }
+    const colors = ["main1", "main2", "main3", "text1"]
 
 </script>
 
@@ -94,7 +97,7 @@
                 <p>Splash Animation</p>
             </div>
             <div class="wrapper">
-                <SvgAnimation />
+                <SvgAnimation colors={colors} />
             </div>
             <div class="buttons">
                 <button onclick={() => copy(splashCode)}>
@@ -126,6 +129,34 @@
             </div>
             <div class="buttons">
                 <button onclick={() => copy(textAreaCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
+        </div>
+
+        <div class="card bb2" style='grid-area: box-7;'>
+            <div class="title">
+                <p>Wind</p>
+            </div>
+            <div class="wrapper">
+                <Wind colors={colors} number={20} speed={2000} />
+            </div>
+            <div class="buttons">
+                <button onclick={() => copy(windCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
+        </div>
+
+        <div class="card bb2" style='grid-area: box-8;'>
+            <div class="title">
+                <p>Squiggles</p>
+            </div>
+            <div class="wrapper">
+                <Squiggles colors={colors} number={10} speed={5000} />
+            </div>
+            <div class="buttons">
+                <button onclick={() => copy(squiggleCode)}>
                     <Copy size=20 />
                 </button>
             </div>
@@ -182,9 +213,15 @@
         "box-2 box-2 box-4 box-4 box-4 box-4"
         "box-5 box-5 box-4 box-4 box-4 box-4"
         "box-5 box-5 box-4 box-4 box-4 box-4"
-        "box-6 box-6 box-6 box-6 .     .    "
-        "box-6 box-6 box-6 box-6 .     .    "
-        "box-6 box-6 box-6 box-6 .     .    "
+        "box-6 box-6 box-7 box-7 box-7 box-7"
+        "box-6 box-6 box-7 box-7 box-7 box-7"
+        ".     .     box-7 box-7 box-7 box-7"
+        ".     .     box-7 box-7 box-7 box-7"
+        "box-8 box-8 box-8 box-8 .     .    "
+        "box-8 box-8 box-8 box-8 .     .    "
+        "box-8 box-8 box-8 box-8 .     .    "
+        "box-8 box-8 box-8 box-8 .     .    "
+
         ;
         box-sizing: border-box;
         gap: 1em;

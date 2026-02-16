@@ -548,13 +548,13 @@ p {
             </div>
         </div>
 
-        <button class='bb3' onclick={copyColors}>
+        <button class='btn3' onclick={copyColors}>
             <div class="svgwrapper">
                 <PaintBucket size=20/>
             </div>
             Copy Colors
         </button>
-        <button class='bb3' onclick={copyValues}>
+        <button class='btn3' onclick={copyValues}>
             <div class="svgwrapper">
                 <Binary size=20/>
             </div>
@@ -733,11 +733,6 @@ p {
 
     .uiMain {
         gap: 20px;
-    }
-
-    button {
-        cursor: pointer;
-        padding: 10px;
     }
 
     .gridBox {
