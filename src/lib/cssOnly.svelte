@@ -30,7 +30,7 @@
                 <p>Shake</p>
             </div>
 
-            <button class='shake btn3'>
+            <button class='shake btn bb3'>
                 Hover Me!
             </button>
 
@@ -41,20 +41,20 @@
                 <p>Buttons</p>
             </div>
 
-            <button class='btn1'>
-                btn1
+            <button class='btn bb1'>
+                bb1
             </button>
-            <button class='btn2'>
-                btn2
+            <button class='btn bb2'>
+                bb2
             </button>
-            <button class='btn3'>
-                btn3
+            <button class='btn bb3'>
+                bb3
             </button>
-            <button class='btnM'>
-                btnM
+            <button class='btn main'>
+                main
             </button>
-            <button class='btnF'>
-                btnF
+            <button class='btn fail'>
+                fail
             </button>
         </div>
 
@@ -63,9 +63,25 @@
                 <p>Wiggle</p>
             </div>
 
-            <button class='wiggle btn3'>
+            <button class='wiggle btn bb3'>
                 Hover Me!
             </button>
+        </div>
+
+        <div class="card bb2" style='grid-area: box-6'>
+            <div class="title">
+                <p>Badges</p>
+            </div>
+
+            <div class="horizontal">
+                <p class='bdg bb1'>bb1</p>
+                <p class='bdg bb2'>bb2</p>
+                <p class='bdg bb3'>bb3</p>
+                <p class='bdg main'>main</p>
+                <p class='bdg fail'>fail</p>
+            </div>
+
+
 
         </div>
 
@@ -98,6 +114,7 @@
         grid-template-areas: 
             "box-1 box-2 box-4"
             "box-3 box-5 box-4"
+            ".     .     box-6"
         ;
         box-sizing: border-box;
         gap: 1em;
@@ -117,47 +134,52 @@
         width: 100%;
     }
 
-    .btn1, .btn2, .btn3, .btnM, .btnF {
+    .btn {
         padding: 10px;
         display: flex;
         border-radius: var(--border-radius);
         cursor: pointer;
         transition: background-color .25s;
+        font-size: 14px;
     }
-    .btn1 {
-        background-color: var(--bg1);
-        border: 1px solid var(--bg2);
+
+    .bdg {
+        padding: 2px 5px 2px 5px;
+        width: fit-content;
+        border-radius: var(--border-radius);
     }
-    .btn1:hover {
+
+
+    .btn.bb1:hover {
         background-color: var(--bg2);
     }
-    .btn2 {
-        background-color: var(--bg2);
-        border: 1px solid var(--bg3);
-    }
-    .btn2:hover {
+    .btn.bb2:hover {
         background-color: var(--bg3);
     }
-    .btn3 {
-        background-color: var(--bg3);
-        border: 1px solid var(--bg4);
-    }
-    .btn3:hover {
+    .btn.bb3:hover {
         background-color: var(--bg4);
     }
-    .btnM {
+    .main {
         background-color: var(--main3);
         border: 1px solid var(--main1);
     }
-    .btnM:hover {
+    .btn.main:hover {
         background-color: var(--main1);
     }
-    .btnF {
+    .btn.fail:hover {
+        background-color: var(--fail1);
+    }
+    .fail {
         background-color: var(--fail3);
         border: 1px solid var(--fail1);
     }
-    .btnF:hover {
-        background-color: var(--fail1);
+
+    .horizontal {
+        flex-direction: row;
+        display: flex;
+        box-sizing: border-box;
+        gap: 10px;
+        flex-wrap: wrap;
     }
 
     .bq {

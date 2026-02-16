@@ -96,8 +96,8 @@
 `;
     output += getColorCss();
 
-    output += `--border-radius: ${borderRadius}px;\n`;
-    output += `--uiPadding: ${univMargin}px;\n`;
+    output += `--border-radius: ${borderRadius * 5}px;\n`;
+    output += `--uiPadding: ${univMargin * 5}px;\n`;
 
     output += "}\n";
 
@@ -548,13 +548,13 @@ p {
             </div>
         </div>
 
-        <button class='btn3' onclick={copyColors}>
+        <button class='btn main' onclick={copyColors}>
             <div class="svgwrapper">
                 <PaintBucket size=20/>
             </div>
             Copy Colors
         </button>
-        <button class='btn3' onclick={copyValues}>
+        <button class='btn bb3' onclick={copyValues}>
             <div class="svgwrapper">
                 <Binary size=20/>
             </div>
@@ -567,7 +567,7 @@ p {
     <div class="uiMain" style='background-color: {bg(0)}; padding: {univMargin * 5}px;'>
 
         <div class="gridBox">
-            <div class="gbItem noPad" style='grid-area: box-1; background-color: {bg(1)}; border-radius: {borderRadius}px; border: 1px solid {bg(2)};'>
+            <div class="gbItem noPad" style='grid-area: box-1; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
                 <div class="mainLines" bind:this={boxHandle}>
                     <svg viewBox="0 0 {width} {height}" width='{width}' height='{height}' fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                         {#each paths as p, i (p.id)}
@@ -580,7 +580,7 @@ p {
                 </div>
             </div>
 
-            <div class="gbItem" style='grid-area: box-2; background-color: {bg(1)}; border-radius: {borderRadius}px; border: 1px solid {bg(2)};'>
+            <div class="gbItem" style='grid-area: box-2; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
                 <div class="title">
                     <p style="color: {text(0)}">Main</p>
                 </div>
@@ -597,7 +597,7 @@ p {
                 </div>
             </div>
 
-            <div class="gbItem" style='grid-area: box-3; background-color: {bg(1)}; border-radius: {borderRadius}px; border: 1px solid {bg(2)};'>
+            <div class="gbItem" style='grid-area: box-3; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
                 <div class="title">
                     <p style="color: {text(0)}">Fail</p>
                 </div>
@@ -612,7 +612,7 @@ p {
                 </div>
             </div>
 
-            <div class="gbItem" style='grid-area: box-4; background-color: {bg(2)}; border-radius: {borderRadius}px; border: 1px solid {bg(3)};'>
+            <div class="gbItem" style='grid-area: box-4; background-color: {bg(2)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(3)};'>
                 <div class="title">
                     <p style="color: {text(0)}">Text 1</p>
                 </div>
