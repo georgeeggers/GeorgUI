@@ -1,7 +1,5 @@
 <script>
-const points = $state([
-  1, 3, 1, 2
-]);
+let { points = $bindable(), displayFunc = (a) => a} = $props();
 
 const degToRad = (deg) => {
   return (deg / 180) * Math.PI;
@@ -70,11 +68,11 @@ const getClip = (percentage) => {
 
 const getCss = (points, index) => {
   let total = sum(points);
-  let percentage = (points[index] / total);
+  let percentage = (points[index].value / total);
   let css = getClip(percentage);
   let angle = 0;
   for(let i = 0; i < index; i++){
-    let percentage = points[i] / total;
+    let percentage = points[i].value / total;
     angle += 360 * percentage;
   }
   return `${css} background-color: var(--main${index + 1}); rotate: ${angle}deg;`
@@ -84,7 +82,7 @@ const getCss = (points, index) => {
 const sum = (points) => {
   let total = 0;
   for(let i of points){
-    total += i;
+    total += i.value;
   }
 
   return total;
@@ -92,11 +90,12 @@ const sum = (points) => {
 
 </script>
 
-<div class="main">
+<div class="pieChart">
   <div class="container">
-    {#each points as _, i}
+    {#each points as p, i}
       <div class="box" style="{getCss(points, i)}">
       </div>
+      <p class='display'>{p.name}</p>
     {/each}
   </div>
 </div>
@@ -107,11 +106,9 @@ const sum = (points) => {
     position: relative;
     box-sizing: border-box;
     clip-path: circle(50% at 50% 50%);
-
     aspect-ratio: 1;
     width: 100%;
     height: 100%;
-
 
   }
 
@@ -131,7 +128,7 @@ const sum = (points) => {
     opacity: 1.0 !important;
   }
 
-  .main {
+  .pieChart {
     width: 100%;
     height: 100%;
     display: flex;
@@ -140,10 +137,26 @@ const sum = (points) => {
     color: var(--text1);
     padding: 20px;
     box-sizing: border-box;
+    background: none;
   }
 
-  .main:hover .box {
+  .pieChart:hover .box {
     opacity: 0.5;
+  }
+
+  .display {
+    rotate: 0deg !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0.0;
+    z-index: 10;
+  }
+
+  .box:hover + .display {
+    opacity: 1.0 !important;
   }
 
 </style>

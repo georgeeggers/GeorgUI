@@ -1,6 +1,6 @@
 <script>
 
-let { points = $bindable()} = $props();
+let { points = $bindable(), displayFunc = (a) => a} = $props();
 
 const getMax = (points) => {
   let max = 0;
@@ -24,7 +24,7 @@ let max = $derived(getMax(points))
     <div class="bar" style="height: {(p.value / max) * 80}%;">
       <div class="barHidden {i > (points.length / 2) ? "toLeft" : "toRight"}">
         <p class='title'>{p.name}</p>
-        <p>${p.value}</p>
+        <p>{displayFunc(p.value)}</p>
       </div>
     </div>
   </div>

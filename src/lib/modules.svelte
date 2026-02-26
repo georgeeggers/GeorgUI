@@ -6,7 +6,7 @@
     import SvgAnimation from "./modules/splash.svelte";
     import Textarea from "./modules/textarea.svelte";
     import Toggle from "./modules/toggle.svelte";
-    import { barGraphCode, dropDownCode, pieChartCode, splashCode, squiggleCode, textAreaCode, toggleCode, windCode } from "../moduleCode";
+    import { barGraphCode, dropDownCode, pieChartCode, splashCode, squiggleCode, textAreaCode, toggleCode, windCode, globalCode } from "../moduleCode";
     import { replace } from 'svelte-spa-router';
     import Wind from "./modules/wind.svelte";
     import Squiggles from "./modules/squiggles.svelte";
@@ -48,17 +48,10 @@
 
         <div class="card bb2" style='grid-area: box-1;'>
             <div class="title">
-                <p>Toggle</p>
+                <p>Global Code</p>
             </div>
-            <p>Simple Toggle</p>
-            <Toggle bind:value={toggle}/>
-            <p>Actioned Toggle</p>
-            <Toggle bind:value={toggle2} action={() => {alert("This toggle has an action!")}}/>
-            <div class="buttons">
-                <button onclick={() => copy(toggleCode)}>
-                    <Copy size=20 />
-                </button>
-            </div>
+            <p>Create a file called global.svelte.js, copy and paste!</p>
+            <button class='btn main' onclick={() => copy(globalCode)}><Copy size=20 /> Copy Code</button>
         </div>
 
         <div class="card bb2" style='grid-area: box-2;'>
@@ -94,7 +87,7 @@
 
         <div class="card bb2" style='grid-area: box-4;'>
             <div class="title">
-                <p>Splash Animation</p>
+                <p>Splash</p>
             </div>
             <div class="wrapper">
                 <SvgAnimation colors={colors} />
@@ -111,7 +104,7 @@
                 <p>Pie Chart</p>
             </div>
             <div class="wrapper">
-                <PieChart />
+                <PieChart bind:points={points}/>
             </div>
             <div class="buttons">
                 <button onclick={() => copy(pieChartCode)}>
@@ -157,6 +150,21 @@
             </div>
             <div class="buttons">
                 <button onclick={() => copy(squiggleCode)}>
+                    <Copy size=20 />
+                </button>
+            </div>
+        </div>
+
+        <div class="card bb2" style='grid-area: box-9;'>
+            <div class="title">
+                <p>Toggle</p>
+            </div>
+            <p>Simple Toggle</p>
+            <Toggle bind:value={toggle}/>
+            <p>Actioned Toggle</p>
+            <Toggle bind:value={toggle2} action={() => {alert("This toggle has an action!")}}/>
+            <div class="buttons">
+                <button onclick={() => copy(toggleCode)}>
                     <Copy size=20 />
                 </button>
             </div>
@@ -215,8 +223,8 @@
         "box-5 box-5 box-4 box-4 box-4 box-4"
         "box-6 box-6 box-7 box-7 box-7 box-7"
         "box-6 box-6 box-7 box-7 box-7 box-7"
-        ".     .     box-7 box-7 box-7 box-7"
-        ".     .     box-7 box-7 box-7 box-7"
+        "box-9 box-9 box-7 box-7 box-7 box-7"
+        "box-9 box-9 box-7 box-7 box-7 box-7"
         "box-8 box-8 box-8 box-8 .     .    "
         "box-8 box-8 box-8 box-8 .     .    "
         "box-8 box-8 box-8 box-8 .     .    "

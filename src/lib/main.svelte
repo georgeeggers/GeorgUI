@@ -178,48 +178,39 @@ p {
     border-radius: var(--border-radius);
 }
 
-.btn1, .btn2, .btn3, .btnM, .btnF {
+.btn {
     padding: 10px;
     display: flex;
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: background-color .25s;
+    font-size: 14px;
 }
-.btn1 {
-    background-color: var(--bg1);
-    border: 1px solid var(--bg2);
-}
-.btn1:hover {
+
+.btn.bb1:hover {
     background-color: var(--bg2);
 }
-.btn2 {
-    background-color: var(--bg2);
-    border: 1px solid var(--bg3);
-}
-.btn2:hover {
+.btn.bb2:hover {
     background-color: var(--bg3);
 }
-.btn3 {
-    background-color: var(--bg3);
-    border: 1px solid var(--bg4);
-}
-.btn3:hover {
+.btn.bb3:hover {
     background-color: var(--bg4);
 }
-.btnM {
+.main {
     background-color: var(--main3);
     border: 1px solid var(--main1);
 }
-.btnM:hover {
+.btn.main:hover {
     background-color: var(--main1);
 }
-.btnF {
+.btn.fail:hover {
+    background-color: var(--fail1);
+}
+.fail {
     background-color: var(--fail3);
     border: 1px solid var(--fail1);
 }
-.btnF:hover {
-    background-color: var(--fail1);
-}
+
 
 .bq {
     border-left: 4px solid var(--bg4);
@@ -227,6 +218,12 @@ p {
     white-space: pre-wrap;
     padding-left: 15px;
     font-style: italic;
+}
+
+.bdg {
+    padding: 2px 5px 2px 5px;
+    width: fit-content;
+    border-radius: var(--border-radius);
 }
 
 @keyframes loading {
@@ -259,8 +256,6 @@ p {
 .wiggle:hover {
     animation: wiggle .5s;
 }
-
-
 `
         await navigator.clipboard.writeText(output);
         alert("CSS Copied");

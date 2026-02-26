@@ -130,6 +130,8 @@ p {
     cursor: pointer;
     transition: background-color .25s;
     font-size: 14px;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn.bb1:hover {
@@ -164,6 +166,13 @@ p {
     padding-left: 15px;
     font-style: italic;
 }
+
+.bdg {
+    padding: 2px 5px 2px 5px;
+    width: fit-content;
+    border-radius: var(--border-radius);
+}
+
 
 @keyframes loading {
     from { rotate: 0deg }

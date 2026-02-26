@@ -16,4 +16,3 @@ export const getID = () => {
 
     return id;
 }
-

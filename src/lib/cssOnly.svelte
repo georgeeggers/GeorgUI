@@ -143,37 +143,6 @@
         font-size: 14px;
     }
 
-    .bdg {
-        padding: 2px 5px 2px 5px;
-        width: fit-content;
-        border-radius: var(--border-radius);
-    }
-
-
-    .btn.bb1:hover {
-        background-color: var(--bg2);
-    }
-    .btn.bb2:hover {
-        background-color: var(--bg3);
-    }
-    .btn.bb3:hover {
-        background-color: var(--bg4);
-    }
-    .main {
-        background-color: var(--main3);
-        border: 1px solid var(--main1);
-    }
-    .btn.main:hover {
-        background-color: var(--main1);
-    }
-    .btn.fail:hover {
-        background-color: var(--fail1);
-    }
-    .fail {
-        background-color: var(--fail3);
-        border: 1px solid var(--fail1);
-    }
-
     .horizontal {
         flex-direction: row;
         display: flex;
@@ -182,13 +151,6 @@
         flex-wrap: wrap;
     }
 
-    .bq {
-        border-left: 4px solid var(--bg4);
-        color: var(--text1);
-        white-space: pre-wrap;
-        padding-left: 15px;
-        font-style: italic;
-    }
 
     @keyframes loading {
         from { rotate: 0deg }
