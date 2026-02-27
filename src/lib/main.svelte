@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import { getID, getRandomInt } from "../global.svelte";
     import { draw } from "svelte/transition";
+    import Toggle from "./modules/toggle.svelte";
 
 
     let mainColor = $state(222);
@@ -212,7 +213,7 @@ p {
 }
 
 
-.bq {
+.bq {   
     border-left: 4px solid var(--bg4);
     color: var(--text1);
     white-space: pre-wrap;
@@ -269,7 +270,7 @@ p {
     }
 
     const text = (i) => {
-        return `hsl(${mainColor}, ${10 + (textVibrancy * 5)}%, ${90 - ((10 - textLightness) * (i))}%);`;
+        return `hsl(${mainColor}, ${10 + (textVibrancy * 5)}%, ${(lightMode ? 10 : 90) - ((10 - textLightness) * (i))}%);`;
     }
 
     const main = (i) => {
@@ -277,11 +278,11 @@ p {
     }
 
     const bg = (i) => {
-        return `hsl(${backgroundColor}, ${(0 + (backgroundVibrancy * 2)) - (3 * i)}%, ${backgroundLightness + (backgroundSpread * i)}%);`;
+        return `hsl(${backgroundColor}, ${(0 + (backgroundVibrancy * 2)) - (3 * i)}%, ${(lightMode ? 100 - backgroundLightness : backgroundLightness) + (backgroundSpread * (lightMode ? -i : i))}%);`;
     }
 
     const bgt = (i) => {
-        return `hsla(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${backgroundLightness + (backgroundSpread * i)}%, 50%);`;
+        return `hsla(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${(lightMode ? 100 - backgroundLightness : backgroundLightness) + (backgroundSpread * (lightMode ? -i : i))}%, 50%);`;
     }
     
     const fail= (i) => {
@@ -394,7 +395,7 @@ p {
 
     }, 1000);
 
-
+    let lightMode = $state(false);
 
 
 
@@ -410,6 +411,18 @@ p {
 
             <p>Georg<i>UI</i></p>
         </div>
+
+
+        <div class="item">
+
+            <div class="slider">
+                <p>Light Mode</p>
+                <div class="toggleWrapper">
+                    <Toggle bind:value={lightMode} />
+                </div>
+            </div>
+        </div>
+
 
         <div class="wordMarker">
             <p>Main Colors</p>
@@ -633,6 +646,14 @@ p {
 </button>
 
 <style>
+
+    .toggleWrapper {
+        width: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 16px;
+        gap: 10px;
+    }
 
     .mainLines {
         width:100%;
