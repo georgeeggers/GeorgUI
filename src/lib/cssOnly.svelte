@@ -80,12 +80,21 @@
                 <p class='bdg main'>main</p>
                 <p class='bdg fail'>fail</p>
             </div>
-
-
-
         </div>
 
+        <div class="card bb2" style='grid-area: box-7'>
+            <div class="title">
+                <p>Tooltips</p>
+            </div>
 
+            <button class='btn main tt'>
+                <div class="toolTip main">
+                    <p>Use a p element inside</p>
+                </div>
+                <div class="arrow main"></div>
+                Hover me!
+            </button>
+        </div>
 
     </div>
 
@@ -114,7 +123,8 @@
         grid-template-areas: 
             "box-1 box-2 box-4"
             "box-3 box-5 box-4"
-            ".     .     box-6"
+            "box-7 .     box-6"
+            "box-7 .     .    "
         ;
         box-sizing: border-box;
         gap: 1em;

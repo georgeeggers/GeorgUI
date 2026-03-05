@@ -227,6 +227,49 @@ p {
     border-radius: var(--border-radius);
 }
 
+@keyframes revealTT {
+    from { opacity: 0.0; top: -50% }
+    to { opacity: 1.0; top: -100%}
+}
+
+.tt {
+    position: relative;
+    cursor: pointer;
+}
+
+.tt:hover .toolTip, .tt:hover .arrow {
+    animation: .3s revealTT .7s forwards;
+}
+
+.toolTip {
+    position: absolute;
+    min-width: fit-content;
+    left: 50%;
+    top: -100%;
+    text-wrap: nowrap;
+    transform: translate(-50%, -50%);
+    padding: 2px 5px 2px 5px;
+    pointer-events: none;
+    opacity: 0.0;
+    border-radius: var(--border-radius);
+    height: 20px;
+}
+
+.arrow {
+    height: 4px;
+    width: 4px;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    position: absolute;
+    min-width: fit-content;
+    left: 50%;
+    top: -100%;
+    text-wrap: nowrap;
+    transform: translate(-50%, calc(-50% + 17px));
+    padding: 2px 5px 2px 5px;
+    pointer-events: none;
+    opacity: 0.0;
+}
+
 @keyframes loading {
     from { rotate: 0deg }
     to { rotate: 360deg }
@@ -273,8 +316,14 @@ p {
         return `hsl(${mainColor}, ${10 + (textVibrancy * 5)}%, ${(lightMode ? 10 : 90) - ((10 - textLightness) * (i))}%);`;
     }
 
+    const yStart = 80;
+    const yChange = 5;
+    const xStart = 10;
+    const xChange = 5;
+
     const main = (i) => {
-        return `hsl(${mainColor}, ${40 + mainVibrancy * 2}%, ${10 + 2 * mainLightness + (mainSpread * i) / 2}%);`
+        return `hsl(${mainColor}, ${yStart - (i * yChange)}%, ${xStart + (xChange * i)}%);`
+        // return `hsl(${mainColor}, ${40 + mainVibrancy * 2}%, ${10 + 2 * mainLightness + (mainSpread * i) / 2}%);`
     }
 
     const bg = (i) => {
@@ -286,7 +335,7 @@ p {
     }
     
     const fail= (i) => {
-        return `hsl(${failColor}, ${40 + failVibrancy * 2}%, ${10 + 2 * failLightness + (failSpread * i) / 2}%);`
+        return `hsl(${failColor}, ${90 - (i * 7)}%, ${10 + (5 * i)}%);`
     }
 
     let points = $state([
@@ -304,15 +353,31 @@ p {
         },
         {
             name: "Chase",
+            value: 82
+        },
+        {
+            name: "'Thew",
+            value: 79
+        },
+        {
+            name: "'Drew",
+            value: 74
+        },
+        {
+            name: "Chase",
             value: 68
         },
         {
             name: "'Thew",
-            value: 48
+            value: 59
         },
         {
             name: "'Drew",
-            value: 32
+            value: 51
+        },
+        {
+            name: "Chase",
+            value: 42
         }
     ])
 
@@ -597,7 +662,7 @@ p {
 
                     {#each points as p, i}
                         <div class="barWrapper">
-                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {main(6 - i)};">
+                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {main(i)};">
                             </div>
                         </div>
                     {/each}
@@ -613,7 +678,7 @@ p {
                 <div class="barMain" style='color: {text(0)}'>
                     {#each points as p, i}
                         <div class="barWrapper">
-                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {fail(6 - i)};">
+                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {fail(i)};">
                             </div>
                         </div>
                     {/each}

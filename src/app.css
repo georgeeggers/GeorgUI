@@ -11,7 +11,7 @@
   scrollbar-width: none;
   color: var(--text1);
 
---main1: hsl(222, 72%, 55%);
+--main1: hsl(222, 80%, 24%);
 --main2: hsl(222, 72%, 50.5%);
 --main3: hsl(222, 72%, 46%);
 --main4: hsl(222, 72%, 41.5%);
@@ -171,6 +171,52 @@ p {
     padding: 2px 5px 2px 5px;
     width: fit-content;
     border-radius: var(--border-radius);
+}
+
+@keyframes revealTT {
+    from { opacity: 0.0; top: -50% }
+    to { opacity: 1.0; top: -100%}
+}
+
+.tt {
+    position: relative;
+    cursor: pointer;
+}
+
+
+.tt:hover .toolTip, .tt:hover .arrow {
+    animation: .3s revealTT .7s forwards;
+}
+
+.toolTip {
+    position: absolute;
+    min-width: fit-content;
+    left: 50%;
+    top: -100%;
+    text-wrap: nowrap;
+    transform: translate(-50%, -50%);
+    padding: 2px 5px 2px 5px;
+    pointer-events: none;
+    opacity: 0.0;
+    border-radius: var(--border-radius);
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.arrow {
+    height: 4px;
+    width: 4px;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    position: absolute;
+    min-width: fit-content;
+    left: 50%;
+    top: -100%;
+    text-wrap: nowrap;
+    transform: translate(-50%, calc(-50% + 17px));
+    padding: 2px 5px 2px 5px;
+    pointer-events: none;
+    opacity: 0.0;
 }
 
 
