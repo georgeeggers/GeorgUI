@@ -12,7 +12,7 @@ let click = () => {
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-<div class="main" onclick={click} style="{value ? "background-color: var(--main3);" : ""}">
+<div class="main" onclick={click} style="{value ? "background-color: var(--main6);" : ""}">
     <div class="toggleDot" style='left: {value ? "calc(100% - 25px);" : "5px;"}'></div>
 </div>
 
@@ -586,7 +586,7 @@ let max = $derived(getMax(points))
   .bar {
     width: 100%;
     margin-top: auto;
-    background-color: var(--main3);
+    background-color: var(--main6);
     border-radius: 5px;
     cursor: pointer;
     position: relative;
@@ -610,7 +610,7 @@ let max = $derived(getMax(points))
   }
 
   .barHidden {
-    background-color: var(--main1);
+    background-color: var(--main6);
     position: absolute;
     visibility: hidden;
     width: fit-content;

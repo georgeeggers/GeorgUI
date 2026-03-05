@@ -1,57 +1,56 @@
 
 :root {
-  font-family: monospace;
-  line-height: 1.5;
-  background-color: var(--bg1);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  color: var(--text1);
+    font-family: monospace;
+    line-height: 1.5;
+    background-color: var(--bg1);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    color: var(--text1);
 
---main0: hsl(250, 98.91304347826087%, 8%);
---main1: hsl(250, 98.82352941176471%, 15%);
---main2: hsl(250, 98.75%, 20%);
---main3: hsl(250, 98.57142857142857%, 30%);
---main4: hsl(250, 98.33333333333333%, 40%);
---main5: hsl(250, 98%, 50%);
---main6: hsl(250, 97.5%, 60%);
---main7: hsl(250, 96.66666666666667%, 70%);
---main8: hsl(250, 95%, 80%);
---main9: hsl(250, 93.33333333333333%, 85%);
---secondary0: hsl(200, 98.91304347826087%, 8%);
---secondary1: hsl(200, 98.82352941176471%, 15%);
---secondary2: hsl(200, 98.75%, 20%);
---secondary3: hsl(200, 98.57142857142857%, 30%);
---secondary4: hsl(200, 98.33333333333333%, 40%);
---secondary5: hsl(200, 98%, 50%);
---secondary6: hsl(200, 97.5%, 60%);
---secondary7: hsl(200, 96.66666666666667%, 70%);
---secondary8: hsl(200, 95%, 80%);
---secondary9: hsl(200, 93.33333333333333%, 85%);
---warn0: hsl(48, 98.91304347826087%, 8%);
---warn1: hsl(48, 98.82352941176471%, 15%);
---warn2: hsl(48, 98.75%, 20%);
---warn3: hsl(48, 98.57142857142857%, 30%);
---warn4: hsl(48, 98.33333333333333%, 40%);
---warn5: hsl(48, 98%, 50%);
---warn6: hsl(48, 97.5%, 60%);
---warn7: hsl(48, 96.66666666666667%, 70%);
---warn8: hsl(48, 95%, 80%);
---warn9: hsl(48, 93.33333333333333%, 85%);
---fail0: hsl(354, 98.91304347826087%, 8%);
---fail1: hsl(354, 98.82352941176471%, 15%);
---fail2: hsl(354, 98.75%, 20%);
---fail3: hsl(354, 98.57142857142857%, 30%);
---fail4: hsl(354, 98.33333333333333%, 40%);
---fail5: hsl(354, 98%, 50%);
---fail6: hsl(354, 97.5%, 60%);
---fail7: hsl(354, 96.66666666666667%, 70%);
---fail8: hsl(354, 95%, 80%);
---fail9: hsl(354, 93.33333333333333%, 85%);
-
+--main0: hsl(18, 90%, 8%);
+--main1: hsl(18, 89.24731182795699%, 15%);
+--main2: hsl(18, 88.63636363636364%, 20%);
+--main3: hsl(18, 87.17948717948718%, 30%);
+--main4: hsl(18, 85.29411764705883%, 40%);
+--main5: hsl(18, 82.75862068965517%, 50%);
+--main6: hsl(18, 79.16666666666667%, 60%);
+--main7: hsl(18, 73.6842105263158%, 70%);
+--main8: hsl(18, 64.28571428571428%, 80%);
+--main9: hsl(18, 56.52173913043478%, 85%);
+--secondary0: hsl(307, 90%, 8%);
+--secondary1: hsl(307, 89.24731182795699%, 15%);
+--secondary2: hsl(307, 88.63636363636364%, 20%);
+--secondary3: hsl(307, 87.17948717948718%, 30%);
+--secondary4: hsl(307, 85.29411764705883%, 40%);
+--secondary5: hsl(307, 82.75862068965517%, 50%);
+--secondary6: hsl(307, 79.16666666666667%, 60%);
+--secondary7: hsl(307, 73.6842105263158%, 70%);
+--secondary8: hsl(307, 64.28571428571428%, 80%);
+--secondary9: hsl(307, 56.52173913043478%, 85%);
+--warn0: hsl(61, 90%, 8%);
+--warn1: hsl(61, 89.24731182795699%, 15%);
+--warn2: hsl(61, 88.63636363636364%, 20%);
+--warn3: hsl(61, 87.17948717948718%, 30%);
+--warn4: hsl(61, 85.29411764705883%, 40%);
+--warn5: hsl(61, 82.75862068965517%, 50%);
+--warn6: hsl(61, 79.16666666666667%, 60%);
+--warn7: hsl(61, 73.6842105263158%, 70%);
+--warn8: hsl(61, 64.28571428571428%, 80%);
+--warn9: hsl(61, 56.52173913043478%, 85%);
+--fail0: hsl(0, 90%, 8%);
+--fail1: hsl(0, 89.24731182795699%, 15%);
+--fail2: hsl(0, 88.63636363636364%, 20%);
+--fail3: hsl(0, 87.17948717948718%, 30%);
+--fail4: hsl(0, 85.29411764705883%, 40%);
+--fail5: hsl(0, 82.75862068965517%, 50%);
+--fail6: hsl(0, 79.16666666666667%, 60%);
+--fail7: hsl(0, 73.6842105263158%, 70%);
+--fail8: hsl(0, 64.28571428571428%, 80%);
+--fail9: hsl(0, 56.52173913043478%, 85%);
 --bg1: hsl(222, 18%, 3%);
 --bg2: hsl(222, 15%, 11%);
 --bg3: hsl(222, 12%, 19%);
@@ -62,22 +61,19 @@
 --bgt3: hsla(222, 32%, 19%, 50%);
 --bgt4: hsla(222, 29%, 27%, 50%);
 
---text1: hsl(250, 25%, 90%);
---text2: hsl(250, 25%, 90%);
---text3: hsl(250, 25%, 90%);
---text4: hsl(250, 25%, 90%);
+--text1: hsl(18, 25%, 90%);
+--text2: hsl(18, 25%, 90%);
+--text3: hsl(18, 25%, 90%);
+--text4: hsl(18, 25%, 90%);
+
 
 
 --border-radius: 5px;
---uiPadding: 4px;
-}
-
-* {
-  font-family: monospace;
+--uiPadding: 20px;
 }
 
 button, input, p, h1 {
-  color: var(--text1);
+    color: var(--text1);
 }
 
 .invis {
@@ -159,7 +155,7 @@ p {
     transition: background-color .25s;
     font-size: 14px;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
 }
 
 .btn.bb1:hover {
@@ -171,23 +167,8 @@ p {
 .btn.bb3:hover {
     background-color: var(--bg4);
 }
-.main {
-    background-color: var(--main3);
-    border: 1px solid var(--main1);
-}
-.btn.main:hover {
-    background-color: var(--main1);
-}
-.btn.fail:hover {
-    background-color: var(--fail1);
-}
-.fail {
-    background-color: var(--fail3);
-    border: 1px solid var(--fail1);
-}
 
-
-.bq {
+.bq {   
     border-left: 4px solid var(--bg4);
     color: var(--text1);
     white-space: pre-wrap;
@@ -198,7 +179,7 @@ p {
 .bdg {
     padding: 2px 5px 2px 5px;
     width: fit-content;
-    border-radius: var(--border-radius);
+    border-radius: 100px;
 }
 
 @keyframes revealTT {
@@ -210,7 +191,6 @@ p {
     position: relative;
     cursor: pointer;
 }
-
 
 .tt:hover .toolTip, .tt:hover .arrow {
     animation: .3s revealTT .7s forwards;
@@ -228,8 +208,6 @@ p {
     opacity: 0.0;
     border-radius: var(--border-radius);
     height: 20px;
-    display: flex;
-    align-items: center;
 }
 
 .arrow {
@@ -246,7 +224,6 @@ p {
     pointer-events: none;
     opacity: 0.0;
 }
-
 
 @keyframes loading {
     from { rotate: 0deg }
@@ -279,6 +256,85 @@ p {
     animation: wiggle .5s;
 }
 
+/* Generated CSS */
+.main {
+    background-color: var(--main3);
+    border: 1px solid var(--main4);
+}
+
+.btn.main:hover {
+    background-color: var(--main4);
+}
+
+.bdg.main {
+    background-color: var(--main2);
+    color: var(--main6);
+    border: 1px solid var(--main5);
+}.secondary {
+    background-color: var(--secondary3);
+    border: 1px solid var(--secondary4);
+}
+
+.btn.secondary:hover {
+    background-color: var(--secondary4);
+}
+
+.bdg.secondary {
+    background-color: var(--secondary2);
+    color: var(--secondary6);
+    border: 1px solid var(--secondary5);
+}.warn {
+    background-color: var(--warn3);
+    border: 1px solid var(--warn4);
+}
+
+.btn.warn:hover {
+    background-color: var(--warn4);
+}
+
+.bdg.warn {
+    background-color: var(--warn2);
+    color: var(--warn6);
+    border: 1px solid var(--warn5);
+}.fail {
+    background-color: var(--fail3);
+    border: 1px solid var(--fail4);
+}
+
+.btn.fail:hover {
+    background-color: var(--fail4);
+}
+
+.bdg.fail {
+    background-color: var(--fail2);
+    color: var(--fail6);
+    border: 1px solid var(--fail5);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .moveButton {
   position: fixed;
   top: 20px;
@@ -298,5 +354,11 @@ p {
 }
 
 .moveButton:hover * {
-  color: var(--main1);
+  color: var(--main6);
+}
+
+
+
+* {
+    font-family: monospace;
 }

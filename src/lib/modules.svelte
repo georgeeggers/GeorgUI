@@ -38,7 +38,7 @@
         await navigator.clipboard.writeText(text);
         alert("Code Copied");
     }
-    const colors = ["main1", "main2", "main3", "text1"]
+    const colors = ["main5", "main6", "main7", "text1"]
 
 </script>
 

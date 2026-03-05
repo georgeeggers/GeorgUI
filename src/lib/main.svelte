@@ -1,7 +1,8 @@
 <script>
-    import { Gamepad, PaintBucket, Binary, Grid, LayoutGrid, Plus } from "@lucide/svelte";
+    import { Gamepad, PaintBucket, Binary, Grid, LayoutGrid, Plus, Trash2, Sparkles } from "@lucide/svelte";
     import { replace } from 'svelte-spa-router'; 
     import Toggle from "./modules/toggle.svelte";
+    import { getID, getRandomInt } from "../global.svelte";
 
 
 
@@ -20,7 +21,8 @@
     let colors = $state([
         {
             name: "main",
-            v: 0
+            v: 0,
+            id: getID()
         },
 
     ])
@@ -28,9 +30,10 @@
 
     const getColorCss = () => {
         let output = "";
-        for(let i of colors){
+
+        for(let color of colors){
             for(let it = 0; it < 10; it++){
-                output += `--${i.name}${it}: ${getColor(i.v, it)}\n`
+                output += `--${color.name}${it}: ${getColor(color.v, it)}\n`
             }
         }
 
@@ -51,7 +54,6 @@
             output += color + "\n";
         }
         output += "\n";
-
         return output;
     }
 
@@ -162,6 +164,8 @@ p {
     cursor: pointer;
     transition: background-color .25s;
     font-size: 14px;
+    align-items: center;
+    gap: 7px;
 }
 
 .btn.bb1:hover {
@@ -173,21 +177,6 @@ p {
 .btn.bb3:hover {
     background-color: var(--bg4);
 }
-.main {
-    background-color: var(--main3);
-    border: 1px solid var(--main1);
-}
-.btn.main:hover {
-    background-color: var(--main1);
-}
-.btn.fail:hover {
-    background-color: var(--fail1);
-}
-.fail {
-    background-color: var(--fail3);
-    border: 1px solid var(--fail1);
-}
-
 
 .bq {   
     border-left: 4px solid var(--bg4);
@@ -200,7 +189,7 @@ p {
 .bdg {
     padding: 2px 5px 2px 5px;
     width: fit-content;
-    border-radius: var(--border-radius);
+    border-radius: 100px;
 }
 
 @keyframes revealTT {
@@ -276,7 +265,14 @@ p {
 .wiggle:hover {
     animation: wiggle .5s;
 }
+
+/* Generated CSS */
 `
+
+        for(let i of colors){
+            output += generateCss(i);
+        }
+
         await navigator.clipboard.writeText(output);
         alert("CSS Copied");
     }
@@ -293,7 +289,7 @@ p {
     }
 
     const interpolate = (t) => {
-        return (100 / (t - 100)) + 100
+        return (1000 / ((t - 8) - 100)) + 100
     }
 
     const iValues = [8, 15, 20, 30, 40, 50, 60, 70, 80, 85, 92]
@@ -367,7 +363,65 @@ p {
 
     let lightMode = $state(false);
 
+    const generateCss = (color) => {
+        let output = ``;
 
+
+        output += `.${color.name} {
+    background-color: var(--${color.name}3);
+    border: 1px solid var(--${color.name}4);
+}
+
+.btn.${color.name}:hover {
+    background-color: var(--${color.name}4);
+}
+
+.bdg.${color.name} {
+    background-color: var(--${color.name}2);
+    color: var(--${color.name}6);
+    border: 1px solid var(--${color.name}5);
+}`
+
+        return output;
+    }
+
+    const getInlineButton = (color) => {
+        return `background-color: ${getColor(color.v, 3)} border: 1px solid ${getColor(color.v, 4)}`
+    }
+
+    const getInlineBadge = (color) => {
+        return `background-color: ${getColor(color.v, 2)} color: ${getColor(color.v, 7)} border: 1px solid ${getColor(color.v, 5)}`
+    }
+
+    const generateRandomColors = () => {
+        colors.length = 0;
+        let main = getRandomInt(270) + 70;
+        let secondary = main - getRandomInt(45) - 20
+        let warn = getRandomInt(55) + 25;
+        let fail = (getRandomInt(30) + 350) % 360;
+        colors = [
+            {
+                name: "main",
+                v: main,
+                id: getID()
+            },
+            {
+                name: "secondary",
+                v: secondary,
+                id: getID()
+            },
+            {
+                name: "warn",
+                v: warn,
+                id: getID()
+            },
+            {
+                name: "fail",
+                v: fail,
+                id: getID()
+            },
+        ]
+    }
 
 </script>
 
@@ -375,7 +429,7 @@ p {
 
     <div class="sideBar scrollOverflow">
         <div class="header">
-            <div class="svgWrapper" style='color: var(--main1);'>
+            <div class="svgWrapper" style='color: var(--main6);'>
                 <Gamepad size=30 />
             </div>
 
@@ -398,14 +452,14 @@ p {
             <div class="item">
                 <div class="slider">
                     <input type='text' class='bb3' bind:value={c.name} />
-                    <p>{c.v}deg</p>
+                    <p style='padding-top: 10px;'>{c.v}deg</p>
                     <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({c.v}, 100%, 50%);' bind:value={c.v} />
                 </div>
             </div>
 
         {/each}
 
-        <button onclick={() => colors.push({name: "new_color", v: 0})} class='btn bb3'>
+        <button onclick={() => colors.push({name: "new_color", v: 0, id: getID()})} class='btn bb3'>
             <Plus size=20/>
             Add Color
         </button>
@@ -454,6 +508,11 @@ p {
             Copy Code
         </button>
 
+        <button class='btn secondary' onclick={generateRandomColors}>
+            <Sparkles size=20 />
+            Generate Colors
+        </button>
+
     </div>
 
 
@@ -468,6 +527,27 @@ p {
             </div>
  
         {/each}
+
+        <div class="contentContainer bb3">
+            <p>Badges</p>
+            <div class="flexWrap">
+                {#each colors as c}
+                    <div class="bdg" style="{getInlineBadge(c)}">{c.name}</div>
+                {/each}
+            </div>
+
+        </div>
+
+        <div class="contentContainer bb3">
+            <p>Buttons</p>
+            <div class="flexWrap">
+                {#each colors as c}
+                    <div class="btn" style="{getInlineButton(c)}">{c.name}</div>
+                {/each}
+            </div>
+
+        </div>
+
     
     </div>
 
@@ -482,6 +562,25 @@ p {
 </button>
 
 <style>
+
+    .flexWrap {
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .contentContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .contentContainer > p {
+        font-size: 18px;
+    }
 
     .color {
         height: 75px;
@@ -520,22 +619,6 @@ p {
         gap: 10px;
     }
 
-    .mainLines {
-        width:100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: auto;
-        margin-right: auto;
-        height: 300px;
-    }
-
-    .mainLines svg {
-        width: 100%;
-        height: 100%;
-    }
-
     button {
         display: flex;
         flex-direction: row;
@@ -543,18 +626,6 @@ p {
         align-items: center;
         justify-content: center;
         margin-top: 10px;
-    }
-
-    .todoList {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        box-sizing: border-box;
-    }
-
-    .title {
-        font-size: 30px;
-        font-weight: bold;
     }
 
     .wrapper {
@@ -590,7 +661,8 @@ p {
     }
 
     i {
-        color: var(--main1);
+        color: var(--main6);
+        font-style: normal;
     }
 
     .header {
@@ -614,32 +686,6 @@ p {
 
     .uiMain {
         gap: 20px;
-    }
-
-    .gridBox {
-        margin-top: auto;
-        margin-bottom: auto;
-        display: grid;
-        width: 100%;
-        grid-auto-columns: 1fr;
-        grid-auto-rows: 1fr;
-        grid-template-areas: 
-        "box-1 box-1 box-3 box-3"
-        "box-1 box-1 box-3 box-3"
-        "box-2 box-2 box-2 box-4"
-        "box-2 box-2 box-2 box-4"
-        ;
-        box-sizing: border-box;
-        gap: 1em;
-    }
-
-    .gbItem {
-        border-radius: 5px;
-        display: flex;
-        position: relative;
-        flex-direction: column;
-        padding: 10px;
-        box-sizing: border-box;
     }
 
     .item {
@@ -670,36 +716,5 @@ p {
         accent-color: var(--text1);
         outline: none;
     }
-
-    .barMain {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        position: relative;
-        overflow: hidden;
-        padding: 20px;
-        box-sizing: border-box;
-        gap: 5px;
-    }
-
-    .bar {
-        width: 100%;
-        margin-top: auto;
-        border-radius: 5px;
-        cursor: pointer;
-        position: relative;
-    }
-
-    .barWrapper {
-        width: 100%;
-        display: flex;
-        height: 100%;
-        position: relative;
-    }
-
-    .noPad {
-        padding: none;
-    }
-    
 
 </style>
