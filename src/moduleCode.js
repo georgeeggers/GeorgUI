@@ -833,3 +833,36 @@ export const getID = () => {
 
     return id;
 }`
+
+export const customDraw = 
+`function cubic_in_out(t) {
+	return t < 0.5 ? 4.0 * t * t * t : 0.5 * Math.pow(2.0 * t - 2.0, 3.0) + 1.0;
+}
+
+
+// @ts-ignore
+export function customDraw(node, { delay = 0, speed, duration, easing = cubic_in_out } = {}) {
+	let len = node.getTotalLength();
+	const style = getComputedStyle(node);
+	if (style.strokeLinecap !== 'butt') {
+		len += parseInt(style.strokeWidth);
+	}
+	if (duration === undefined) {
+		if (speed === undefined) {
+			duration = 800;
+		} else {
+			duration = len / speed;
+		}
+	} else if (typeof duration === 'function') {
+		duration = duration(len);
+	}
+	return {
+		delay,
+		duration,
+		easing,
+		css: (_, u) => \`
+			stroke-dasharray: \${len};
+			stroke-dashoffset: \${u * len * -1 };
+		\`
+	};
+}`

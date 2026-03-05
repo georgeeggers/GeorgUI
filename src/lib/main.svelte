@@ -1,16 +1,9 @@
 <script>
-    import { Gamepad, PaintBucket, Binary, Grid, LayoutGrid } from "@lucide/svelte";
+    import { Gamepad, PaintBucket, Binary, Grid, LayoutGrid, Plus } from "@lucide/svelte";
     import { replace } from 'svelte-spa-router'; 
-    import { onMount } from "svelte";
-    import { getID, getRandomInt } from "../global.svelte";
-    import { draw } from "svelte/transition";
     import Toggle from "./modules/toggle.svelte";
 
 
-    let mainColor = $state(222);
-    let mainVibrancy = $state(16);
-    let mainLightness = $state(9);
-    let mainSpread = $state(9);
 
     let backgroundColor = $state(222);
     let backgroundVibrancy = $state(9);
@@ -20,38 +13,26 @@
     let textVibrancy = $state(3);
     let textLightness = $state(10);
 
-    let failColor = $state(0);
-    let failVibrancy = $state(16);
-    let failLightness = $state(9);
-    let failSpread = $state(9);
 
     let borderRadius = $state(3);
     let univMargin = $state(4);
 
-    $effect(() => {
-        backgroundColor = mainColor;
-    })
+    let colors = $state([
+        {
+            name: "main",
+            v: 0
+        },
 
-    $effect(() => {
-        failVibrancy = mainVibrancy;
-    })
-
-    $effect(() => {
-        failLightness = mainLightness;
-    })
-
-        $effect(() => {
-        failSpread = mainSpread;
-    })
+    ])
 
 
     const getColorCss = () => {
         let output = "";
-        for(let i = 0; i < 6; i++){
-            const color = `--main${i + 1}: ${main(6 - i)}`;
-            output += color + "\n";
+        for(let i of colors){
+            for(let it = 0; it < 10; it++){
+                output += `--${i.name}${it}: ${getColor(i.v, it)}\n`
+            }
         }
-        output += "\n";
 
         for(let i = 0; i < 4; i++){
             const color = `--bg${i + 1}: ${bg(i)}`;
@@ -71,11 +52,6 @@
         }
         output += "\n";
 
-        for(let i = 0; i < 6; i++){
-            const color = `--fail${i + 1}: ${fail(6 - i)}`;
-            output += color + "\n";
-        }
-        output += "\n";
         return output;
     }
 
@@ -313,17 +289,17 @@ p {
     }
 
     const text = (i) => {
-        return `hsl(${mainColor}, ${10 + (textVibrancy * 5)}%, ${(lightMode ? 10 : 90) - ((10 - textLightness) * (i))}%);`;
+        return `hsl(${colors[0].v}, ${10 + (textVibrancy * 5)}%, ${(lightMode ? 10 : 90) - ((10 - textLightness) * (i))}%);`;
     }
 
-    const yStart = 80;
-    const yChange = 5;
-    const xStart = 10;
-    const xChange = 5;
+    const interpolate = (t) => {
+        return (100 / (t - 100)) + 100
+    }
 
-    const main = (i) => {
-        return `hsl(${mainColor}, ${yStart - (i * yChange)}%, ${xStart + (xChange * i)}%);`
-        // return `hsl(${mainColor}, ${40 + mainVibrancy * 2}%, ${10 + 2 * mainLightness + (mainSpread * i) / 2}%);`
+    const iValues = [8, 15, 20, 30, 40, 50, 60, 70, 80, 85, 92]
+
+    const getColor = (angle, i) => {
+        return `hsl(${angle}, ${interpolate(iValues[i])}%, ${iValues[i]}%);`
     }
 
     const bg = (i) => {
@@ -332,10 +308,6 @@ p {
 
     const bgt = (i) => {
         return `hsla(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${(lightMode ? 100 - backgroundLightness : backgroundLightness) + (backgroundSpread * (lightMode ? -i : i))}%, 50%);`;
-    }
-    
-    const fail= (i) => {
-        return `hsl(${failColor}, ${90 - (i * 7)}%, ${10 + (5 * i)}%);`
     }
 
     let points = $state([
@@ -393,73 +365,6 @@ p {
 
     let max = $derived(getMax(points));
 
-    const getRandomCurve = (width, height) => {
-        const time = getRandomInt(4000) + 500;
-        const size = getRandomInt(3) + 1;
-        const color = getRandomInt(4);
-        const startX = getRandomInt(width)
-        const endX = startX + (getRandomInt(100) - 50);
-        let firstIsLeft = false;
-        if(getRandomInt(1) == 1){
-            firstIsLeft = true;
-        }
-
-        const v = getRandomInt(4) + 1;
-
-        const f1X = (width / 2) + ((getRandomInt(width / v)) / size) * (firstIsLeft ? -1 : 1);
-        const f1Y = (height / 2) + ((getRandomInt(height / v)) / size);
-
-        const f2X = (width / 2) + ((getRandomInt(width / v)) / size) * (firstIsLeft ? 1 : -1);
-        const f2Y = (height / 2) + ((getRandomInt(height / v)) / size) - 50;
-
-        let output = `M${startX}, -10 C${f1X}, ${f1Y} ${f2X}, ${f2Y} ${endX}, ${height}`;
-        return {size: size, path: output, time: time, id: getID(), color: color};
-    }
-
-    let paths = $state([]);
-
-    let width = $state(0);
-    let height = $state(0);
-
-    const getColors = (b1, b2) => {
-        let output = [];
-        for(let i = 0; i < 6; i++){
-            let color = main(6 - i);
-            output.push(color);
-            color = fail(6 - i);
-            output.push(color);
-        }
-        console.log(output);
-        return output;
-
-    }
-
-    let colors = $derived(getColors(mainColor, failColor));
-
-    onMount(() => {
-
-        const ro = new ResizeObserver((entries) => {
-
-            for(let i of entries){
-                width = i.contentRect.width;
-                height = i.contentRect.height;
-            }
-        });
-
-        ro.observe(boxHandle);
-
-    })
-
-    let boxHandle = $state(null);
-
-    setInterval(() => {
-        if(paths.length > 10){
-            paths.splice(0, 1);
-        }
-        paths.push(getRandomCurve(width, height))
-
-    }, 1000);
-
     let lightMode = $state(false);
 
 
@@ -488,37 +393,22 @@ p {
             </div>
         </div>
 
+        {#each colors as c, i}
 
-        <div class="wordMarker">
-            <p>Main Colors</p>
-        </div>
+            <div class="item">
+                <div class="slider">
+                    <input type='text' class='bb3' bind:value={c.name} />
+                    <p>{c.v}deg</p>
+                    <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({c.v}, 100%, 50%);' bind:value={c.v} />
+                </div>
+            </div>
 
-        <div class="item">
-            <div class="slider">
-                <p>Base - {mainColor}deg</p>
-                <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({mainColor}, 100%, 50%);' bind:value={mainColor} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Vibrancy - {mainVibrancy}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={mainVibrancy} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Lightness - {mainLightness}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={mainLightness} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Spread - {mainSpread}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={mainSpread} />
-            </div>
-        </div>
+        {/each}
 
-
+        <button onclick={() => colors.push({name: "new_color", v: 0})} class='btn bb3'>
+            <Plus size=20/>
+            Add Color
+        </button>
 
 
         <div class="wordMarker">
@@ -530,76 +420,6 @@ p {
                 <p>Base - {backgroundColor}</p>
                 <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({backgroundColor}, 100%, 50%);' bind:value={backgroundColor} />
 
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Vibrancy - {backgroundVibrancy}</p>
-                <input class='bb3' type='range' min="0" max='30' bind:value={backgroundVibrancy} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Lightness - {backgroundLightness}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={backgroundLightness} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Spread - {backgroundSpread}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={backgroundSpread} />
-            </div>
-        </div>
-
-
-
-        <div class="wordMarker">
-            <p>Text</p>
-        </div>
-
-        <div class="item">
-            <div class="slider">
-                <p>Vibrancy - {textVibrancy}</p>
-                <input class='bb3' type='range' min="1" max='10' bind:value={textVibrancy} />
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="slider">
-                <p>Lightness - {textLightness}</p>
-                <input class='bb3' type='range' min="1" max='20' bind:value={textLightness} />
-            </div>
-        </div>
-
-
-
-
-        <div class="wordMarker">
-            <p>Fail</p>
-        </div>
-
-        <div class="item">
-            <div class="slider">
-                <p>Base - {failColor}deg</p>
-                <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({failColor}, 100%, 50%);' bind:value={failColor} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Vibrancy - {failVibrancy}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={failVibrancy} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Lightness - {failLightness}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={failLightness} />
-            </div>
-        </div>
-        <div class="item">
-            <div class="slider">
-                <p>Spread - {failSpread}</p>
-                <input class='bb3' type='range' min="0" max='20' bind:value={failSpread} />
             </div>
         </div>
 
@@ -639,64 +459,15 @@ p {
 
     <div class="uiMain" style='background-color: {bg(0)}; padding: {univMargin * 5}px;'>
 
-        <div class="gridBox">
-            <div class="gbItem noPad" style='grid-area: box-1; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
-                <div class="mainLines" bind:this={boxHandle}>
-                    <svg viewBox="0 0 {width} {height}" width='{width}' height='{height}' fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                        {#each paths as p, i (p.id)}
-                            <path d="{p.path}" stroke-width="{9 / p.size}" style='z-index: {3 - p.size}; color: {colors[p.color]};' 
-                                transition:draw={{ duration: p.time }}
-                            />
-                        {/each}
-                    </svg>
+        {#each colors as color}
 
-                </div>
+            <div class="colorArea">
+                {#each {length: 10 } as _, i}
+                    <div class='color' style='grid-area: c{i}; background-color: {getColor(color.v, i)};'></div>
+                {/each}
             </div>
-
-            <div class="gbItem" style='grid-area: box-2; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
-                <div class="title">
-                    <p style="color: {text(0)}">Main</p>
-                </div>
-
-                <div class="barMain" style='color: {text(0)}'>
-
-                    {#each points as p, i}
-                        <div class="barWrapper">
-                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {main(i)};">
-                            </div>
-                        </div>
-                    {/each}
-
-                </div>
-            </div>
-
-            <div class="gbItem" style='grid-area: box-3; background-color: {bg(1)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(2)};'>
-                <div class="title">
-                    <p style="color: {text(0)}">Fail</p>
-                </div>
-
-                <div class="barMain" style='color: {text(0)}'>
-                    {#each points as p, i}
-                        <div class="barWrapper">
-                            <div class="bar" style="height: {(p.value / max) * 80}%; background-color: {fail(i)};">
-                            </div>
-                        </div>
-                    {/each}
-                </div>
-            </div>
-
-            <div class="gbItem" style='grid-area: box-4; background-color: {bg(2)}; border-radius: {borderRadius * 5}px; border: 1px solid {bg(3)};'>
-                <div class="title">
-                    <p style="color: {text(0)}">Text 1</p>
-                </div>
-                <div class="todoList">
-                    <p style="color: {text(1)}">Text 2</p>
-                    <p style="color: {text(2)}">Text 3</p>
-                    <p style="color: {text(3)}">Text 4</p>
-                </div>
-            </div>
-
-        </div>
+ 
+        {/each}
     
     </div>
 
@@ -711,6 +482,35 @@ p {
 </button>
 
 <style>
+
+    .color {
+        height: 75px;
+        border-radius: 5px;
+    }
+
+    .colorArea {
+
+        width: 100%;
+        gap: 5px;
+
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 75px;
+        grid-template-areas: 
+            "c0 c1 c2 c3 c4 c5 c6 c7 c8 c9" 
+        ;
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 750px){
+        .colorArea {
+            grid-template-areas: 
+                "c0 c1 c2 c3 c4"
+                "c5 c6 c7 c8 c9" 
+            
+            ;
+        }
+    }
 
     .toggleWrapper {
         width: 50px;

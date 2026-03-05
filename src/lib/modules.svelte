@@ -6,7 +6,7 @@
     import SvgAnimation from "./modules/splash.svelte";
     import Textarea from "./modules/textarea.svelte";
     import Toggle from "./modules/toggle.svelte";
-    import { barGraphCode, dropDownCode, pieChartCode, splashCode, squiggleCode, textAreaCode, toggleCode, windCode, globalCode } from "../moduleCode";
+    import { barGraphCode, dropDownCode, pieChartCode, splashCode, squiggleCode, textAreaCode, toggleCode, windCode, globalCode, customDraw } from "../moduleCode";
     import { replace } from 'svelte-spa-router';
     import Wind from "./modules/wind.svelte";
     import Squiggles from "./modules/squiggles.svelte";
@@ -170,6 +170,16 @@
             </div>
         </div>
 
+        <div class="card bb2" style='grid-area: box-a;'>
+
+            <div class="title">
+                <p>Custom Draw</p>
+            </div>
+            <p>Create a folder called utils next to your modules, and create customDraw.js. Put this in there. Edit placeholder anim code, and set in to be draw, and out to be customDraw.</p>
+            <button class='btn main' onclick={() => copy(customDraw)}><Copy size=20 /> Copy Code</button>
+
+        </div>
+
     </div>
 
 
@@ -225,9 +235,9 @@
         "box-6 box-6 box-7 box-7 box-7 box-7"
         "box-9 box-9 box-7 box-7 box-7 box-7"
         "box-9 box-9 box-7 box-7 box-7 box-7"
-        "box-8 box-8 box-8 box-8 .     .    "
-        "box-8 box-8 box-8 box-8 .     .    "
-        "box-8 box-8 box-8 box-8 .     .    "
+        "box-8 box-8 box-8 box-8 box-a box-a"
+        "box-8 box-8 box-8 box-8 box-a box-a"
+        "box-8 box-8 box-8 box-8 box-a box-a"
         "box-8 box-8 box-8 box-8 .     .    "
 
         ;
