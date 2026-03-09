@@ -4,17 +4,6 @@
     import Toggle from "./modules/toggle.svelte";
     import { getID, getRandomInt } from "../global.svelte";
 
-
-
-    let backgroundColor = $state(222);
-    let backgroundVibrancy = $state(9);
-    let backgroundLightness = $state(3);
-    let backgroundSpread = $state(8);
-
-    let textVibrancy = $state(3);
-    let textLightness = $state(10);
-
-
     let borderRadius = $state(3);
     let univMargin = $state(4);
 
@@ -22,10 +11,22 @@
         {
             name: "main",
             v: 0,
+            saturation: 100,
             id: getID()
         },
-
     ])
+
+    let background = $state({
+        v: 0,
+        saturation: 15,
+        id: getID()
+    });
+
+    let text = $state({
+        v: 0,
+        saturation: 15,
+        id: getID()
+    });
 
 
     const getColorCss = () => {
@@ -37,22 +38,14 @@
             }
         }
 
-        for(let i = 0; i < 4; i++){
-            const color = `--bg${i + 1}: ${bg(i)}`;
-            output += color + "\n";
+        for(let it = 0; it < 10; it++){
+            output += `--bg${it}: ${getColor(background.v, lightMode ? 9 - it : it, background.saturation, bValues)}\n`
         }
-        output += "\n";
 
-        for(let i = 0; i < 4; i++){
-            const color = `--bgt${i + 1}: ${bgt(i)}`;
-            output += color + "\n";
+        for(let it = 0; it < 10; it++){
+            output += `--text${it}: ${getColor(text.v, lightMode ? it : 9 - it, text.saturation, bValues)}\n`
         }
-        output += "\n";
 
-        for(let i = 0; i < 4; i++){
-            const color = `--text${i + 1}: ${text(i)}`;
-            output += color + "\n";
-        }
         output += "\n";
         return output;
     }
@@ -277,6 +270,11 @@ p {
         alert("CSS Copied");
     }
 
+    const copyText = async (text) => {
+        await navigator.clipboard.writeText(text);
+        alert("CSS Copied");
+    }
+
     const copyColors = async () => {
         const color = getColorCss();
 
@@ -284,82 +282,16 @@ p {
         alert("CSS Copied");
     }
 
-    const text = (i) => {
-        return `hsl(${colors[0].v}, ${10 + (textVibrancy * 5)}%, ${(lightMode ? 10 : 90) - ((10 - textLightness) * (i))}%);`;
+    const interpolate = (t, m) => {
+        return ((m * 10) / ((t * m / 100) - m)) + m
     }
 
-    const interpolate = (t) => {
-        return (1000 / ((t - 8) - 100)) + 100
+    const iValues = [5, 12, 20, 30, 40, 50, 60, 70, 80, 88]
+    const bValues = [0, 6,  10, 15, 40, 60, 85, 90, 93, 99]
+
+    const getColor = (angle, i, saturation = 100, values=iValues) => {
+        return `hsl(${angle}, ${interpolate(values[i], saturation)}%, ${values[i]}%);`
     }
-
-    const iValues = [8, 15, 20, 30, 40, 50, 60, 70, 80, 85, 92]
-
-    const getColor = (angle, i) => {
-        return `hsl(${angle}, ${interpolate(iValues[i])}%, ${iValues[i]}%);`
-    }
-
-    const bg = (i) => {
-        return `hsl(${backgroundColor}, ${(0 + (backgroundVibrancy * 2)) - (3 * i)}%, ${(lightMode ? 100 - backgroundLightness : backgroundLightness) + (backgroundSpread * (lightMode ? -i : i))}%);`;
-    }
-
-    const bgt = (i) => {
-        return `hsla(${backgroundColor}, ${(20 + (backgroundVibrancy * 2)) - (3 * i)}%, ${(lightMode ? 100 - backgroundLightness : backgroundLightness) + (backgroundSpread * (lightMode ? -i : i))}%, 50%);`;
-    }
-
-    let points = $state([
-        {
-            name: "Rajesh",
-            value: 100
-        },
-        {
-            name: "Rajun",
-            value: 92
-        },
-        {
-            name: "Jayden",
-            value: 87
-        },
-        {
-            name: "Chase",
-            value: 82
-        },
-        {
-            name: "'Thew",
-            value: 79
-        },
-        {
-            name: "'Drew",
-            value: 74
-        },
-        {
-            name: "Chase",
-            value: 68
-        },
-        {
-            name: "'Thew",
-            value: 59
-        },
-        {
-            name: "'Drew",
-            value: 51
-        },
-        {
-            name: "Chase",
-            value: 42
-        }
-    ])
-
-    const getMax = (points) => {
-        let max = 0;
-        for(let i of points){
-            if(i.value > max){
-            max = i.value;
-            }
-        }
-        return max;
-    }
-
-    let max = $derived(getMax(points));
 
     let lightMode = $state(false);
 
@@ -386,41 +318,60 @@ p {
     }
 
     const getInlineButton = (color) => {
-        return `background-color: ${getColor(color.v, 3)} border: 1px solid ${getColor(color.v, 4)}`
+        return `background-color: ${getColor(color.v, 3, color.saturation)} border: 1px solid ${getColor(color.v, 4, color.saturation)}`
     }
 
     const getInlineBadge = (color) => {
-        return `background-color: ${getColor(color.v, 2)} color: ${getColor(color.v, 7)} border: 1px solid ${getColor(color.v, 5)}`
+        return `background-color: ${getColor(color.v, 2, color.saturation)} color: ${getColor(color.v, 7, color.saturation)} border: 1px solid ${getColor(color.v, 5, color.saturation)}`
     }
 
     const generateRandomColors = () => {
         colors.length = 0;
-        let main = getRandomInt(270) + 70;
+        let main = getRandomInt(180) + 135;
         let secondary = main - getRandomInt(45) - 20
         let warn = getRandomInt(55) + 25;
         let fail = (getRandomInt(30) + 350) % 360;
+        let saturation = getRandomInt(40) + 60
         colors = [
             {
                 name: "main",
                 v: main,
+                saturation: saturation,
                 id: getID()
             },
             {
                 name: "secondary",
                 v: secondary,
+                saturation: saturation,
                 id: getID()
             },
             {
                 name: "warn",
                 v: warn,
+                saturation: saturation,
                 id: getID()
             },
             {
                 name: "fail",
                 v: fail,
+                saturation: saturation,
                 id: getID()
             },
         ]
+        
+        let bgSaturation = getRandomInt(20);
+
+        background = {
+            v: main,
+            saturation: bgSaturation,
+            id: getID()
+        }
+
+        text = {
+            v: main,
+            saturation: bgSaturation,
+            id: getID()
+        }
     }
 
 </script>
@@ -436,7 +387,34 @@ p {
             <p>Georg<i>UI</i></p>
         </div>
 
+       <div class="wordMarker">
+            <p>App Colors</p>
+        </div>
 
+        {#each colors as c, i}
+
+            <div class="item">
+                <div class="slider">
+                    <input type='text' class='bb3' bind:value={c.name} />
+                    <p style='padding-top: 10px;'>{c.v}deg</p>
+                    <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({c.v}, 100%, 50%);' bind:value={c.v} />
+                    <p style='padding-top: 10px;'>{c.saturation}% saturation</p>
+                    <input class='bb3' type='range' min="1" max='100' style='accent-color: {getColor(c.v, 50, c.saturation)}' bind:value={c.saturation} />
+                </div>
+            </div>
+
+        {/each}
+
+        <button onclick={() => colors.push({name: "new_color", v: 0, saturation: 100, id: getID()})} class='btn bb3'>
+            <Plus size=20/>
+            Add Color
+        </button>
+
+
+        <div class="wordMarker">
+            <p>Background</p>
+        </div>
+        
         <div class="item">
 
             <div class="slider">
@@ -447,51 +425,25 @@ p {
             </div>
         </div>
 
-        {#each colors as c, i}
-
-            <div class="item">
-                <div class="slider">
-                    <input type='text' class='bb3' bind:value={c.name} />
-                    <p style='padding-top: 10px;'>{c.v}deg</p>
-                    <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({c.v}, 100%, 50%);' bind:value={c.v} />
-                </div>
-            </div>
-
-        {/each}
-
-        <button onclick={() => colors.push({name: "new_color", v: 0, id: getID()})} class='btn bb3'>
-            <Plus size=20/>
-            Add Color
-        </button>
-
-
-        <div class="wordMarker">
-            <p>Background</p>
-        </div>
-
         <div class="item">
             <div class="slider">
-                <p>Base - {backgroundColor}</p>
-                <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({backgroundColor}, 100%, 50%);' bind:value={backgroundColor} />
-
+                <p>Base - {background.v}</p>
+                <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({background.v}, 100%, 50%);' bind:value={background.v} />
+                <p style='padding-top: 10px;'>{background.saturation}% saturation</p>
+                <input class='bb3' type='range' min="1" max='100' style='accent-color: {getColor(background.v, 50, background.saturation, bValues)}' bind:value={background.saturation} />
             </div>
         </div>
 
         <div class="wordMarker">
-            <p>Misc</p>
+            <p>Text Colors</p>
         </div>
 
         <div class="item">
             <div class="slider">
-                <p>Border Radius - {borderRadius * 5}px</p>
-                <input class='bb3' type='range' min="1" max='10' bind:value={borderRadius} />
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="slider">
-                <p>Margin - {univMargin * 5}px</p>
-                <input class='bb3' type='range' min="1" max='10' bind:value={univMargin} />
+                <p>Base - {text.v}</p>
+                <input class='bb3' type='range' min="0" max='360' style='accent-color: hsl({text.v}, 100%, 50%);' bind:value={text.v} />
+                <p style='padding-top: 10px;'>{text.saturation}% saturation</p>
+                <input class='bb3' type='range' min="1" max='100' style='accent-color: {getColor(text.v, 50, text.saturation,bValues)}' bind:value={text.saturation} />
             </div>
         </div>
 
@@ -501,14 +453,14 @@ p {
             </div>
             Copy Colors
         </button>
-        <button class='btn bb3' onclick={copyValues}>
+        <button class='btn secondary' onclick={copyValues}>
             <div class="svgwrapper">
                 <Binary size=20/>
             </div>
             Copy Code
         </button>
 
-        <button class='btn secondary' onclick={generateRandomColors}>
+        <button class='btn bb3' onclick={generateRandomColors}>
             <Sparkles size=20 />
             Generate Colors
         </button>
@@ -516,19 +468,22 @@ p {
     </div>
 
 
-    <div class="uiMain" style='background-color: {bg(0)}; padding: {univMargin * 5}px;'>
+    <div class="uiMain">
+
+        <h1>App Colors</h1>
 
         {#each colors as color}
 
             <div class="colorArea">
                 {#each {length: 10 } as _, i}
-                    <div class='color' style='grid-area: c{i}; background-color: {getColor(color.v, i)};'></div>
+                    <label for="{getColor(color.v, i, color.saturation)}" class='color' style='grid-area: c{i}; background-color: {getColor(color.v, i, color.saturation)};'></label>
+                    <button class='invis' id='{getColor(color.v, i,color.saturation)}' onclick={() => copyText(getColor(color.v, i, color.saturation))}>Copy Color</button>
                 {/each}
             </div>
  
         {/each}
 
-        <div class="contentContainer bb3">
+        <div class="contentContainer">
             <p>Badges</p>
             <div class="flexWrap">
                 {#each colors as c}
@@ -538,7 +493,7 @@ p {
 
         </div>
 
-        <div class="contentContainer bb3">
+        <div class="contentContainer">
             <p>Buttons</p>
             <div class="flexWrap">
                 {#each colors as c}
@@ -548,7 +503,26 @@ p {
 
         </div>
 
+        <h1>Background Colors</h1>
     
+        <div class="colorArea">
+            {#each {length: 10 } as _, i}
+                {@const color = getColor(background.v, lightMode ? 9 - i : i, background.saturation, bValues)}
+                <label for="{color}" class='color' style='grid-area: c{i}; background-color: {color}'></label>
+                <button class='invis' id='{color}' onclick={() => copyText(color)}>Copy Color</button>
+            {/each}
+        </div>
+
+        <h1>Text Colors</h1>
+    
+        <div class="colorArea">
+            {#each {length: 10 } as _, i}
+                {@const color = getColor(text.v, lightMode ? i : 9 - i, text.saturation, bValues)}
+                <label for="{color}" class='color' style='grid-area: c{i}; background-color: {color}'></label>
+                <button class='invis' id='{color}' onclick={() => copyText(color)}>Copy Color</button>
+            {/each}
+        </div>
+
     </div>
 
 </div>
@@ -585,7 +559,13 @@ p {
     .color {
         height: 75px;
         border-radius: 5px;
+        cursor: pointer;
     }
+
+    .color:hover {
+        border-radius: 10px;
+    }
+
 
     .colorArea {
 
@@ -601,7 +581,7 @@ p {
         box-sizing: border-box;
     }
 
-    @media (max-width: 750px){
+    @media (max-width: 1000px){
         .colorArea {
             grid-template-areas: 
                 "c0 c1 c2 c3 c4"
